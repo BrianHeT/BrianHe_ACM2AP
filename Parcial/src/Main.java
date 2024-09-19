@@ -73,14 +73,14 @@ public class Main {
 
 	                            JOptionPane.showMessageDialog(null, "Propiedad modificada con éxito");
 	                        } else {
-	                            JOptionPane.showMessageDialog(null, "Selección no válida.");
+	                            JOptionPane.showMessageDialog(null, "error");
 	                        }
 	                    }
 	                    break;
 //propiedades disponibles
 	                case 2: 
 	                    if (propiedades.isEmpty()) {
-	                        JOptionPane.showMessageDialog(null, "No hay propiedades registradas.");
+	                        JOptionPane.showMessageDialog(null, "erro");
 	                    } else {
 	                        String listaDisponibles = "";
 	                        for (Propiedad propiedad : propiedades) {
