@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 class Propiedad {
     private String propiedad;
     private int tipo; 
@@ -51,9 +55,27 @@ class Propiedad {
         return !estado; 
     }
 
-    public void alquilar() {
-        estado = true;
-    }
+    public static void alquilar(ArrayList<Propiedad>propiedades) {
+    	 if (propiedades.isEmpty()) {
+             JOptionPane.showMessageDialog(null, "No hay propiedades registradas.");
+         } else {
+             String listaPropiedades = "";
+             for (int i = 0; i < propiedades.size(); i++) {
+                 if (propiedades.get(i).estaDisponible()) {
+                     listaPropiedades += (i + 1) + ". " + propiedades.get(i).getPropiedad() + "\n";
+                 }
+             }
+             int seleccion = Integer.parseInt(JOptionPane.showInputDialog("Selecciona la propiedad a alquilar:\n" + listaPropiedades)) - 1;
+
+             if (seleccion >= 0 && seleccion < propiedades.size()) {
+                 propiedades.get(seleccion).estaDisponible();
+                 JOptionPane.showMessageDialog(null, "Propiedad alquilada");
+             } else {
+                 JOptionPane.showMessageDialog(null, "error");
+             }
+         }
+    	 }
+       
 
     public double getValor() {
         return valor;
@@ -89,10 +111,96 @@ class Propiedad {
         }
     }
 
+    public static String verificacionVacio(String propiedades){
+    	if (propiedades.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "erro");
+        } else {
+           return  propiedades;
+    }
+		return propiedades;}
+    
+    
 	@Override
 	public String toString() {
 		return "Propiedad [propiedad=" + propiedad + ", tipo=" + tipo + ", ubicacion=" + ubicacion + ", size=" + size
 				+ ", estado=" + estado + ", valor=" + valor + "]";
 	}
+
+public static void modificarPropiedad(ArrayList<Propiedad>propiedades) {
+	if (propiedades.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "No hay propiedades registradas.");
+    } else {
+        String listaPropiedades = "";
+        for (int i = 0; i < propiedades.size(); i++) {
+            listaPropiedades += (i + 1) + ". " + propiedades.get(i).getPropiedad() + "\n";
+        }
+        int seleccion = Integer.parseInt(JOptionPane.showInputDialog("Selecciona la propiedad a modificar:\n" + listaPropiedades)) - 1;
+
+        if (seleccion >= 0 && seleccion < propiedades.size()) {
+            Propiedad propiedadAModificar = propiedades.get(seleccion);
+
+            String nuevoNombre = JOptionPane.showInputDialog("Nuevo nombre de la propiedad:", propiedadAModificar.getPropiedad());
+            int nuevoTipo = Integer.parseInt(JOptionPane.showInputDialog("Nuevo tipo \n 0: departamento\n 1: casa\n 2: mansion:", propiedadAModificar.getTipo()));
+            int nuevaUbicacion = Integer.parseInt(JOptionPane.showInputDialog("Nueva ubicación \n 0: Barrio Bajo \n 1: Barrio Medio\n 2: Barrio Alto):", propiedadAModificar.getUbicacion()));
+            int nuevoSize = Integer.parseInt(JOptionPane.showInputDialog("Nuevo tamaño \n 0: Chico\n 1: Mediano\n 2: Grande:", propiedadAModificar.getSize()));
+            double nuevoValor = Double.parseDouble(JOptionPane.showInputDialog("Nuevo valor base del alquiler:", propiedadAModificar.getValor()));
+
+            double nuevoValorFinal = nuevoValor * Propiedad.valorTipo(nuevoTipo) * Propiedad.valorUbicacion(nuevaUbicacion) * Propiedad.valorSize(nuevoSize);
+
+            
+            
+            propiedadAModificar.setPropiedad(nuevoNombre);
+            propiedadAModificar.setTipo(nuevoTipo);
+            propiedadAModificar.setUbicacion(nuevaUbicacion);
+            propiedadAModificar.setSize(nuevoSize);
+            propiedadAModificar.setValor(nuevoValorFinal);
+
+            JOptionPane.showMessageDialog(null, "Propiedad modificada con éxito");
+        } else {
+            JOptionPane.showMessageDialog(null, "error");
+        }
+    }	
 }
+
+
+public static void listaPropiedad(ArrayList<Propiedad>propiedades) {
+	 if (propiedades.isEmpty()) {
+         JOptionPane.showMessageDialog(null, "erro");
+     } else {
+         String listaDisponibles = "";
+         for (Propiedad propiedad : propiedades) {
+             if (propiedad.estaDisponible()) {
+                 listaDisponibles += propiedad.getPropiedad() + " - " + propiedad.getValor() + "\n";
+             }
+         }
+         if (listaDisponibles.isEmpty()) {
+             JOptionPane.showMessageDialog(null, "No hay propiedades disponibles");
+         } else {
+             JOptionPane.showMessageDialog(null, "Propiedades disponibles:\n" + listaDisponibles);
+         }
+     }
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+/*for (Propiedad propiedad : propiedad) {
+    if (propiedad.estaDisponible()) {
+        listaDisponibles += propiedad.getPropiedad() + " - " + propiedad.getValor() + "\n";
+    }
+}
+if (listaDisponibles.isEmpty()) {
+    JOptionPane.showMessageDialog(null, "No hay propiedades disponibles");
+} else {
+    JOptionPane.showMessageDialog(null, "Propiedades disponibles:\n" + listaDisponibles);
+}
+}*/
 
