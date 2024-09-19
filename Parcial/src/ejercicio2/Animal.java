@@ -52,8 +52,8 @@ public class Animal {
 
 	@Override
 	public String toString() {
-		return "Animal [nombre=" + nombre + ", especie=" + especie + ", raza=" + raza + ", edad=" + edad
-				+ ", fechaTurno=" + fechaTurno + ", observaciones=" + observaciones + "]";
+		return "Animal nombre=" + nombre + "\n especie=" + especie + "\n raza=" + raza + "\n edad=" + edad
+				+ "\n siguiente Turno=" + fechaTurno + "\n observaciones= " + observaciones;
 	}
 }
 
